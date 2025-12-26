@@ -15,8 +15,10 @@ const app = express();
 
 // Config
 const PORT = process.env.PORT || 4000;
-const MONGO_URI =
-  process.env.MONGO_URI || 'mongodb://localhost:27017/nexwatch';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/nexwatch';
+
+// Set strictQuery option to avoid deprecation warning
+mongoose.set('strictQuery', false); // or true if you prefer that behavior
 
 // Middleware
 app.use(cors());
@@ -24,7 +26,7 @@ app.use(express.json());
 
 // MongoDB connection
 mongoose
-  .connect(MONGO_URI)
+  .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('✅ Connected to MongoDB');
   })
