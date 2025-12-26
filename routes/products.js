@@ -1,5 +1,5 @@
-import express from 'express';
-import Product from '../models/Product.js';
+const express = require('express');
+const Product = require('../models/Product');
 
 const router = express.Router();
 
@@ -38,7 +38,11 @@ router.post('/', async (req, res) => {
 // PUT /api/products/:id
 router.put('/:id', async (req, res) => {
   try {
-    const updated = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updated = await Product.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
     if (!updated) return res.status(404).json({ message: 'Not found' });
     res.json(updated);
   } catch (err) {
@@ -57,4 +61,4 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;
